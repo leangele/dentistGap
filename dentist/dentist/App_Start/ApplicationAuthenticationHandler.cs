@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -20,7 +21,7 @@ namespace dentist
             IEnumerable<string> monsterApiKeyHeaderValues = null;
 
             // Checking the Header values
-            if (request.Headers.TryGetValues("X-MonsterAppApiKey", out monsterApiKeyHeaderValues))
+            if (request.Headers.TryGetValues("X-wsApiKey", out monsterApiKeyHeaderValues))
             {
                 string[] apiKeyHeaderValue = monsterApiKeyHeaderValues.First().Split(':');
 
@@ -30,11 +31,10 @@ namespace dentist
                     // Code logic after authenciate the application.
                     var appID = apiKeyHeaderValue[0];
                     var AppKey = apiKeyHeaderValue[1];
-
-                    if (appID.Equals("MosterIPhoneX123") && AppKey.Equals("ThisMonsterIsPersist"))
+                    if (appID.Equals(ConfigurationManager.AppSettings["appID"]) && AppKey.Equals(ConfigurationManager.AppSettings["AppKey"]))
                     {
                         var userNameClaim = new Claim(ClaimTypes.Name, appID);
-                        var identity = new ClaimsIdentity(new[] { userNameClaim }, "MonsterAppApiKey");
+                        var identity = new ClaimsIdentity(new[] { userNameClaim }, "wsApiKeyApiKey");
                         var principal = new ClaimsPrincipal(identity);
                         Thread.CurrentPrincipal = principal;
 
