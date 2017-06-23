@@ -14,8 +14,9 @@ var treatments_service_1 = require("./treatments.service");
 var TreatmentComponent = (function () {
     function TreatmentComponent(treatmentsService) {
         this.date = "01-01-2017";
-        this.treatments = treatmentsService.getTreatments();
-        console.log("Treatment", this.treatments);
+        treatmentsService.
+            getTreatments().
+            subscribe(function (data) { return console.log(data); });
     }
     return TreatmentComponent;
 }());

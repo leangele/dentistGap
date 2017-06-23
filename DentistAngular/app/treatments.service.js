@@ -20,15 +20,13 @@ var TreatmentsService = (function () {
         this._baseUrl = "http://localhost:51035/api/";
     }
     TreatmentsService.prototype.createAuthorizationHeader = function (headers) {
-        headers.append('X-wsApiKey', 'Basic ' +
-            btoa('Rikki0145:gs145ka'));
+        headers.append('x-wsapikey', 'Rikki0145:gs145ka');
     };
     TreatmentsService.prototype.getTreatments = function () {
-        var headers = new http_1.Headers();
-        this.createAuthorizationHeader(headers);
-        return this._http.get("http://localhost:51035/api/Patients", {
-            headers: headers
-        }).map(function (res) { return res.json(); }).catch(this.handleError);
+        xhr.setRequestHeader("x-wsapikey", "Rikki0145:gs145ka");
+        var headers = new http_1.Headers({ 'Access-Control-Request-Headers': 'x-wsapikey:Rikki0145:gs145ka' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this._http.get("http://localhost:51035/api/Patients", options).map(function (res) { return res.json(); }).catch(this.handleError);
     };
     TreatmentsService.prototype.handleError = function (error) {
         // In a real world app, you might use a remote logging infrastructure

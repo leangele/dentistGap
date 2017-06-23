@@ -11,7 +11,9 @@ export class TreatmentComponent {
     date="01-01-2017";
     treatments;
     constructor(treatmentsService: TreatmentsService) {
-        this.treatments = treatmentsService.getTreatments();
-        console.log("Treatment",this.treatments);
+         treatmentsService.
+            getTreatments().
+            subscribe(data =>  console.log(data));
+
     }
 }

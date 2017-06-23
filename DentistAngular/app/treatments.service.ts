@@ -11,16 +11,14 @@ export class TreatmentsService {
     constructor(private _http: Http) { }
 
     createAuthorizationHeader(headers: Headers) {
-        headers.append('X-wsApiKey', 'Basic ' +
-            btoa('Rikki0145:gs145ka'));
+        headers.append('x-wsapikey','Rikki0145:gs145ka' );
     }
 
     getTreatments() {
-        let headers = new Headers();
-        this.createAuthorizationHeader(headers);
-        return this._http.get("http://localhost:51035/api/Patients", {
-            headers: headers
-        }).map((res: Response) => res.json()).catch(this.handleError);
+        xhr.setRequestHeader("x-wsapikey", "Rikki0145:gs145ka");
+        let headers = new Headers({ 'Access-Control-Request-Headers': 'x-wsapikey:Rikki0145:gs145ka'});
+        let options = new RequestOptions({ headers: headers });
+        return this._http.get("http://localhost:51035/api/Patients", options).map((res: Response) => res.json()).catch(this.handleError);
     }
 
     private handleError(error: Response | any) {
