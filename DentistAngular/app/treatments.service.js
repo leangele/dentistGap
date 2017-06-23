@@ -11,15 +11,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
+var Observable_1 = require("rxjs/Observable");
 require("rxjs/add/operator/map");
+require("rxjs/add/operator/catch");
 var TreatmentsService = (function () {
     function TreatmentsService(_http) {
         this._http = _http;
         this._baseUrl = "http://localhost:51035/api/";
     }
+    TreatmentsService.prototype.createAuthorizationHeader = function (headers) {
+        headers.append('X-wsApiKey', 'Basic ' +
+            btoa('Rikki0145:gs145ka'));
+    };
     TreatmentsService.prototype.getTreatments = function () {
-        return this._http.get(this._baseUrl + "Treatments")
-            .map(function (res) { return res.json(); });
+        var headers = new http_1.Headers();
+        this.createAuthorizationHeader(headers);
+        return this._http.get("http://localhost:51035/api/Patients", {
+            headers: headers
+        }).map(function (res) { return res.json(); }).catch(this.handleError);
+    };
+    TreatmentsService.prototype.handleError = function (error) {
+        // In a real world app, you might use a remote logging infrastructure
+        var errMsg;
+        if (error instanceof http_1.Response) {
+            var body = error.json() || '';
+            var err = body.error || JSON.stringify(body);
+            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
+        }
+        else {
+            errMsg = error.message ? error.message : error.toString();
+        }
+        console.error(errMsg);
+        return Observable_1.Observable.throw(errMsg);
     };
     return TreatmentsService;
 }());

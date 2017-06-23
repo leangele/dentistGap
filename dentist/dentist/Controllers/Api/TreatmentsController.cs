@@ -1,5 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using System.Web.Http;
+using dentist.Models;
 
 namespace dentist.Controllers.Api
 {
@@ -14,15 +18,23 @@ namespace dentist.Controllers.Api
 
         public TreatmentsController()
         {
-            
+
         }
 
         // GET: api/Me
         [Authorize]
-        public string GetTreatments()
+        //public string GetTreatments()
+        //{
+        //    var treatments = _unitOfWork.Treatment.GetTreatments().ToList();
+        //    return JsonConvert.SerializeObject(treatments);
+        //}
+
+
+        public async Task<IHttpActionResult> GetTreatments()
         {
-            var treatments = _unitOfWork.Treatment.GetTreatments();
-            return JsonConvert.SerializeObject(treatments);
+            List<Treatment> treatments = _unitOfWork.Treatment.GetTreatments().ToList();
+
+            return Ok(treatments);
         }
 
         //GET: api/Treatments/5

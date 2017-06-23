@@ -25,9 +25,16 @@ namespace dentist.Models
             _context = context;
         }
 
+        public Patient()
+        {
+            
+        }
+
         public IEnumerable<Patient> GetPatients()
         {
             return _context.Patients;
         }
+
+
     }
 }

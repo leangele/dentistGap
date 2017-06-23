@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace dentist.Models
 {
@@ -14,5 +15,6 @@ namespace dentist.Models
         string Name { get; set; }
         DateTime NextAppointment { get; set; }
         ICollection<Treatment> Treatments { get; set; }
+        IEnumerable<Patient> GetPatients();
     }
 }

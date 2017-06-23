@@ -22,7 +22,7 @@ var TreatmentComponent = (function () {
 TreatmentComponent = __decorate([
     core_1.Component({
         selector: 'Treatment',
-        template: '<h1>Treatment module: {{date}} {{treatments}}</h1>'
+        template: "<h1>Treatment module: {{date}} </h1>\n  \n  ",
     }),
     __metadata("design:paramtypes", [treatments_service_1.TreatmentsService])
 ], TreatmentComponent);
